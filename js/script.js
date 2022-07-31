@@ -1,6 +1,7 @@
 const pokemonName = document.querySelector('.pokemon_name')
 const pokemonNumber = document.querySelector('.pokemon_id')
 const pokemonImage = document.querySelector('.pokemon_image')
+const pokemonType = document.querySelector('.input_type')
 const form = document.querySelector('.form')
 const inputSearch = document.querySelector('.input_search')
 const buttonPrevious = document.querySelector('.button_prev')
@@ -21,6 +22,7 @@ const renderPokemon = async (pokemon) => {
 
     pokemonName.innerHTML = 'Loading...'
     pokemonNumber.innerHTML = ''
+    pokemonType.value = 'Pokémon type'
 
     const data = await fetchPokemon(pokemon)
 
@@ -30,29 +32,38 @@ const renderPokemon = async (pokemon) => {
         pokemonNumber.innerHTML = data.id
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
         pokemon_id = data.id
+
+        if (data['types']['1']) {
+            pokemonType.value = `Pokémon type: ${data['types']['0']['type']['name']} - ${data['types']['1']['type']['name']}`
+        } else {
+            pokemonType.value = `Pokémon type: ${data['types']['0']['type']['name']}`
+        }
+        
     } else {
         pokemonImage.style.display = 'none'
         pokemonName.innerHTML = 'Not found :('
         pokemonNumber.innerHTML = ''
         pokemonImage.src = "#"
+        pokemonType.value = 'Pokémon type'
     }
 }
 
-form.addEventListener('submit', (event) => {
+inputSearch.addEventListener('keyup', (event) => {
     event.preventDefault()
-    renderPokemon(inputSearch.value.toLowerCase())
-    inputSearch.value = ''
+    if (event.key === "Enter") {
+        renderPokemon(inputSearch.value.toLowerCase())
+        inputSearch.value = ''
+    }
+
 })
 
 buttonNext.addEventListener('click', () => {
     renderPokemon(pokemon_id += 1)
-    console.log(pokemon_id)
 })
 
 buttonPrevious.addEventListener('click', () => {
     if (pokemon_id > 0) {
         renderPokemon(pokemon_id -= 1)
-        console.log(pokemon_id)
     }
     
 })

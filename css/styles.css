@@ -51,6 +51,22 @@ body {
     left: 13.5%;
 }
 
+.input_type {
+    width: 100%;
+    padding: 5%;
+    outline: none;
+    border: 2px solid #333;
+    font-style: oblique;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: clamp(6px, 4vw, 1rem);
+    box-shadow: -3px 4px 0 #888, -5px 7px 0 #333;
+    background-color: white;
+    margin-bottom: 10px;
+    margin-top: -10px;
+    text-transform: capitalize;
+}
+
 .input_search {
     width: 100%;
     padding: 5%;
